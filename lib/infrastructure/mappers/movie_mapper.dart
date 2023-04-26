@@ -16,12 +16,12 @@ class MovieMapper {
       popularity: movieDB.popularity,
       posterPath: (movieDB.posterPath != '') 
         ? 'https://image.tmdb.org/t/p/w500${movieDB.posterPath}'
-        : 'https://studiolegalelisi.it/wp-content/uploads/2021/03/errore-404-1200x514.jpg',
+        : 'no-poster',
       releaseDate: movieDB.releaseDate,
       title: movieDB.title,
       video: movieDB.video,
       voteAverage: movieDB.voteAverage,
       voteCount: movieDB.voteCount
   );
-  
+
 }

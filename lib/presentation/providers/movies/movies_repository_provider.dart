@@ -4,6 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 //Este repositorio es inmutable solo lectura
-final movieProvider = Provider((ref) {
+final moviesRepositoryProvider = Provider((ref) {
   return MovieRepositoryImpl(MoviedbDatasource());
 });

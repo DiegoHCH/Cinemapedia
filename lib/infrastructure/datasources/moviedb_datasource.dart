@@ -1,12 +1,9 @@
 
-
-
-
+import 'package:dio/dio.dart';
 
 import 'package:cinemapedia/config/constants/environment.dart';
 import 'package:cinemapedia/domain/datasources/movies_datasources.dart';
 import 'package:cinemapedia/domain/entities/movie_entity.dart';
-import 'package:dio/dio.dart';
 
 class MoviedbDatasource extends MoviesDatasource{
 

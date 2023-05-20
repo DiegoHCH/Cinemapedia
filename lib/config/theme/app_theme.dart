@@ -5,6 +5,6 @@ class AppTheme {
 
   ThemeData getTheme() => ThemeData(
     useMaterial3: true,
-    colorSchemeSeed: const Color(0xFF28F1A2)
+    colorSchemeSeed: Colors.blue
   );
 }

@@ -172,7 +172,7 @@ class _Title extends StatelessWidget {
 
           const Spacer(),
 
-          if( title != null)
+          if( subTitle != null)
             FilledButton.tonal(
               style: const ButtonStyle(visualDensity: VisualDensity.compact),
               onPressed: (){}, 

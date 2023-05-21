@@ -5,13 +5,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 final nowPlayingMoviesProvider = StateNotifierProvider<MoviesNotifier, List<MovieEntity>>((ref) {
-  
   final fetchMoreMovies = ref.watch(moviesRepositoryProvider).getNowPlaying;
-  
   return MoviesNotifier(
     fetchMoreMovies: fetchMoreMovies
   );
 });
+
+final popularMoviesProvider = StateNotifierProvider<MoviesNotifier, List<MovieEntity>>((ref) {
+  final fetchMoreMovies = ref.watch(moviesRepositoryProvider).getPopular;
+  return MoviesNotifier(
+    fetchMoreMovies: fetchMoreMovies
+  );
+});
+
 
 typedef MovieCallback = Future<List<MovieEntity>> Function({int page});
 

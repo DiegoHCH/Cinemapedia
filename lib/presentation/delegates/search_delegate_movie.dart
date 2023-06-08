@@ -1,7 +1,9 @@
 
+import 'package:animate_do/animate_do.dart';
+import 'package:cinemapedia/domain/entities/movie_entity.dart';
 import 'package:flutter/material.dart';
 
-class SearchMovieDelegate extends SearchDelegate {
+class SearchMovieDelegate extends SearchDelegate<MovieEntity?> {
 
   @override
   String get searchFieldLabel => 'Buscar película';
@@ -9,13 +11,25 @@ class SearchMovieDelegate extends SearchDelegate {
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
-      const Text('BuildActions')
+      
+      FadeIn(
+        animate: query.isNotEmpty,
+        duration: const Duration(milliseconds: 200),
+        child: IconButton(
+          onPressed: () => query = '', 
+          icon: const Icon(Icons.clear_rounded)
+        ),
+      ),
+
     ];
   }
 
   @override
   Widget? buildLeading(BuildContext context) {
-    return const Text('BuildLeading');
+    return IconButton(
+      onPressed: () => close(context, null), 
+      icon: const Icon(Icons.arrow_back_ios)
+    );
   }
 
   @override

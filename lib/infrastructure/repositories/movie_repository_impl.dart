@@ -35,5 +35,10 @@ class MovieRepositoryImpl extends MoviesRepository {
   Future<MovieEntity> getMovieByID(String id) {
     return datasource.getMovieByID(id);
   }
+  
+  @override
+  Future<List<MovieEntity>> serachMovies(String query) {
+    return datasource.serachMovies(query);
+  }
 
 }

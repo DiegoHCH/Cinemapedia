@@ -37,7 +37,7 @@ class MovieRepositoryImpl extends MoviesRepository {
   }
   
   @override
-  Future<List<MovieEntity>> serachMovies(String query) {
+  Future<List<MovieEntity>> searchMovies(String query) {
     return datasource.serachMovies(query);
   }
 

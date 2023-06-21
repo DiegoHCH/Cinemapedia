@@ -37,6 +37,25 @@ class SearchMovieDelegate extends SearchDelegate<MovieEntity?> {
     });
   }
 
+  Widget buildResultsAndSuggestions() {
+    return StreamBuilder(
+      initialData: initialMovies,
+      stream: debouncedMovies.stream,
+      builder: (context, snapshot) {
+
+        final movies = snapshot.data ?? [];
+        return ListView.builder(
+          itemCount: movies.length,
+          itemBuilder: (context, index) => _MovieItem(
+            movie: movies[index], 
+            onMovieSelected: (context, movie) {
+              clearStreams();
+              close(context, movie);
+            },));
+       },
+      );
+  }
+
   @override
   String get searchFieldLabel => 'Buscar película';
 
@@ -69,44 +88,13 @@ class SearchMovieDelegate extends SearchDelegate<MovieEntity?> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return StreamBuilder(
-      initialData: initialMovies,
-      stream: debouncedMovies.stream,
-      builder: (context, snapshot) {
-
-        final movies = snapshot.data ?? [];
-        return ListView.builder(
-          itemCount: movies.length,
-          itemBuilder: (context, index) => _MovieItem(
-            movie: movies[index], 
-            onMovieSelected: (context, movie) {
-              clearStreams();
-              close(context, movie);
-            },));
-       },
-      );
+    return buildResultsAndSuggestions();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-
     _onQueryChanged(query);
-
-    return StreamBuilder(
-      initialData: initialMovies,
-      stream: debouncedMovies.stream,
-      builder: (context, snapshot) {
-        final movies = snapshot.data ?? [];
-        return ListView.builder(
-          itemCount: movies.length,
-          itemBuilder: (context, index) => _MovieItem(
-            movie: movies[index], 
-            onMovieSelected: (context, movie) {
-              clearStreams();
-              close(context, movie);
-            },));
-       },
-      );
+    return buildResultsAndSuggestions();
   }
 
 }

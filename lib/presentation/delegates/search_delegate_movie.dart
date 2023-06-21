@@ -18,12 +18,22 @@ class SearchMovieDelegate extends SearchDelegate<MovieEntity?> {
     required this.searchMovies,
   });
 
+  void clearStreams() {
+    debouncedMovies.close();
+  }
+
   void _onQueryChanged( String query ) {
-    print('Query String cambio');
     if( _debounceTimer?.isActive ?? false ) _debounceTimer!.cancel();
 
-    _debounceTimer = Timer(const Duration(milliseconds: 500), () {
-      print('Buscanco peliculas');
+    _debounceTimer = Timer(const Duration(milliseconds: 500), () async {
+      if( query.isEmpty ) {
+        debouncedMovies.add([]);
+        return;
+      }
+
+      final movies = await searchMovies(query);
+      debouncedMovies.add(movies);
+    
     });
   }
 
@@ -49,8 +59,11 @@ class SearchMovieDelegate extends SearchDelegate<MovieEntity?> {
   @override
   Widget? buildLeading(BuildContext context) {
     return IconButton(
-      onPressed: () => close(context, null), 
-      icon: const Icon(Icons.arrow_back_ios)
+      onPressed: () {
+        clearStreams(); 
+        close(context, null);
+        }, 
+        icon: const Icon(Icons.arrow_back_ios)
     );
   }
 
@@ -70,7 +83,12 @@ class SearchMovieDelegate extends SearchDelegate<MovieEntity?> {
         final movies = snapshot.data ?? [];
         return ListView.builder(
           itemCount: movies.length,
-          itemBuilder: (context, index) => _MovieItem(movie: movies[index], onMovieSelected: close,));
+          itemBuilder: (context, index) => _MovieItem(
+            movie: movies[index], 
+            onMovieSelected: (context, movie) {
+              clearStreams();
+              close(context, movie);
+            },));
        },
       );
   }

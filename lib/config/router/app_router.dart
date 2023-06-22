@@ -8,8 +8,11 @@ final appRouter = GoRouter(
         path: '/home/:view',
         name: HomeScreen.name,
         builder: (context, state) {
-          final pageIndex = state.params['view'] ?? '0';
-          return  HomeScreen(pageIndex: int.parse(pageIndex),);
+          int pageIndex = int.parse(state.params['view'] ?? '0');
+          if( pageIndex > 2 || pageIndex < 0) {
+            pageIndex = 0;
+          }
+          return  HomeScreen(pageIndex: pageIndex,);
         },
         routes: [
           GoRoute(
@@ -20,4 +23,9 @@ final appRouter = GoRouter(
                 return MovieScreen(movieId: movieID);
               }),
         ]),
+
+    GoRoute(
+      path: '/',
+      redirect: ( _ , __ ) => '/home/0',
+    )
 ]);

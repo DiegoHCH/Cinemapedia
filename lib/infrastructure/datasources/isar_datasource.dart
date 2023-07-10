@@ -2,8 +2,28 @@
 
 import 'package:cinemapedia/domain/datasources/local_storage_datasource.dart';
 import 'package:cinemapedia/domain/entities/movie_entity.dart';
+import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
 
 class IsarDatasource extends LocalStorageDatasource {
+
+  late Future<Isar> db;
+
+  IsarDatasource() {
+    db = openDB();
+  }
+
+  Future<Isar> openDB() async {
+
+    final directory = await getApplicationDocumentsDirectory();
+
+      if(Isar.instanceNames.isEmpty) {
+      return await Isar.open([MovieEntitySchema], inspector: true, directory: directory.path);
+    }
+
+    return Future.value(Isar.getInstance());
+  }
+
   @override
   Future<bool> isMovieFavorite(int movieId) {
     // TODO: implement isMovieFavorite
@@ -11,14 +31,14 @@ class IsarDatasource extends LocalStorageDatasource {
   }
 
   @override
-  Future<List<MovieEntity>> loadMovies({int limit = 10, offset = 0}) {
-    // TODO: implement loadMovies
+  Future<void> toggleFavorite(MovieEntity movie) {
+    // TODO: implement toggleFavorite
     throw UnimplementedError();
   }
 
-  @override
-  Future<void> toggleFavorite(MovieEntity movie) {
-    // TODO: implement toggleFavorite
+   @override
+  Future<List<MovieEntity>> loadMovies({int limit = 10, offset = 0}) {
+    // TODO: implement loadMovies
     throw UnimplementedError();
   }
 

@@ -202,7 +202,6 @@ class _CustomSliverAppBar extends StatelessWidget {
       ],
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        //title: Text(movie.title, style: const TextStyle(fontSize: 20), textAlign: TextAlign.start,),
         background: Stack(
           children: [
             SizedBox.expand(
